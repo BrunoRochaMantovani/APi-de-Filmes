@@ -8,9 +8,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlServer(connectionString);
 });
-
+builder.Services.AddControllers();
 var app = builder.Build();
 
+app.MapControllers();
 app.UseHttpsRedirection();
 
 app.Run();
