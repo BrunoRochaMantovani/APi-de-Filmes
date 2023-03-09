@@ -8,5 +8,10 @@
         public string Nacionalidade { get; set; }
 
         public DateTime Data_Nascimento { get; set; }
+
+        //PROPRIEDADES DE NAVEGAÇÃO
+
+        public List<Filme> Filmes { get; set; }
+
     }
 }

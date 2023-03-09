@@ -7,5 +7,7 @@
         public string UltimoNome { get; set; }
         public string Nacionalidade { get; set; }
         public DateTime Data_Nascimento { get; set; }
+
+        public List<Filme> Filmes { get; set; }
     }
 }

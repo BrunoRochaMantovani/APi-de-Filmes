@@ -1,3 +1,4 @@
+using Filmes_API.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

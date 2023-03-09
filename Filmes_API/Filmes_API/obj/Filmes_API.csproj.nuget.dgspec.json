@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bruno\\Desktop\\Filmes_API\\Filmes_API\\Filmes_API\\Filmes_API.csproj": {}
+    "C:\\dev\\FilmesAPI\\APi-de-Filmes\\Filmes_API\\Filmes_API\\Filmes_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bruno\\Desktop\\Filmes_API\\Filmes_API\\Filmes_API\\Filmes_API.csproj": {
+    "C:\\dev\\FilmesAPI\\APi-de-Filmes\\Filmes_API\\Filmes_API\\Filmes_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bruno\\Desktop\\Filmes_API\\Filmes_API\\Filmes_API\\Filmes_API.csproj",
+        "projectUniqueName": "C:\\dev\\FilmesAPI\\APi-de-Filmes\\Filmes_API\\Filmes_API\\Filmes_API.csproj",
         "projectName": "Filmes_API",
-        "projectPath": "C:\\Users\\Bruno\\Desktop\\Filmes_API\\Filmes_API\\Filmes_API\\Filmes_API.csproj",
-        "packagesPath": "C:\\Users\\Bruno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bruno\\Desktop\\Filmes_API\\Filmes_API\\Filmes_API\\obj\\",
+        "projectPath": "C:\\dev\\FilmesAPI\\APi-de-Filmes\\Filmes_API\\Filmes_API\\Filmes_API.csproj",
+        "packagesPath": "C:\\Users\\brunomantovani\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\FilmesAPI\\APi-de-Filmes\\Filmes_API\\Filmes_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Bruno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\brunomantovani\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
