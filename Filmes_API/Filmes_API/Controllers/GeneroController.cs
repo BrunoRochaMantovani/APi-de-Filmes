@@ -26,6 +26,7 @@ namespace Filmes_API.Controllers
                         .Generos
                         .AsNoTracking()
                         .ToListAsync();
+
                List<GeneroGetViewModel> generoGetViewModels= new List<GeneroGetViewModel>();
 
                foreach(var obj in todos)
@@ -35,7 +36,8 @@ namespace Filmes_API.Controllers
                 }
 
                 return Ok(generoGetViewModels);
-            }catch(Exception ex) { return BadRequest(ex.Message); }
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet(template:"{id}")]
@@ -52,26 +54,27 @@ namespace Filmes_API.Controllers
                 var escolhidoGetViewModel = new GeneroGetViewModel { Id = escolhido.Id, NomeGenero = escolhido.NomeGenero };
                 return Ok(escolhidoGetViewModel);
             }
-            catch(Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GeneroPostOrPutViewModel model)
         {
+            //return Ok("OK");
             try
             {
-                if (!ModelState.IsValid) 
+                if (!ModelState.IsValid)
                     return BadRequest("O Modelo informado está incorreto ");
 
-                var genero = new Genero{ NomeGenero = model.NomeGenero};
+                var genero = new Genero { NomeGenero = model.NomeGenero };
 
 
                 await _context.Generos.AddAsync(genero);
                 await _context.SaveChangesAsync();
-                return Ok(RedirectToAction("ListarTodos"));
+                return Ok(genero);
 
             }
-            catch(Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
 
@@ -97,7 +100,8 @@ namespace Filmes_API.Controllers
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("ListarTodos");
-            }catch (Exception ex) { return BadRequest(ex.Message); }
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpDelete(template:"{id}")]
