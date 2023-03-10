@@ -1,4 +1,5 @@
 ﻿using Filmes_API.Data;
+using Filmes_API.Models;
 using Filmes_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,8 +55,72 @@ namespace Filmes_API.Controllers
             catch(Exception ex) { return BadRequest(ex.Message); }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Post()
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] GeneroPostOrPutViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid) 
+                    return BadRequest("O Modelo informado está incorreto ");
 
+                var genero = new Genero{ NomeGenero = model.NomeGenero};
+
+
+                await _context.Generos.AddAsync(genero);
+                await _context.SaveChangesAsync();
+                return Ok(RedirectToAction("ListarTodos"));
+
+            }
+            catch(Exception ex) { return BadRequest(ex.Message); }
+        }
+
+
+        [HttpPut(template:"{id}")]
+        public async Task<IActionResult> Put([FromBody] GeneroPostOrPutViewModel model,
+                int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest("Modelo invalido");
+
+                var genero = await _context
+                        .Generos
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(x => x.Id == id);
+                if (genero is null)
+                    return BadRequest("Genero não encontrado");
+
+                genero.NomeGenero = model.NomeGenero;
+
+                _context.Generos.Update(genero);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("ListarTodos");
+            }catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpDelete(template:"{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var genero = await _context.Generos
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (genero is null)
+                    return BadRequest("Usuário não encontrado");
+
+                _context.Generos.Remove(genero);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("ListarTodos");
+
+            }
+            catch(Exception ex) { return BadRequest(ex.Message); }
+        }
+    
     }
 }
