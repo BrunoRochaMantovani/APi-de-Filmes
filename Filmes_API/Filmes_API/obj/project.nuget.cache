@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tbhVrWd1GV0X3JO/Nrfr2MDt+Pq15+WXTp+RBIVEYbWt0Fx3Qq42Sb+xmI7K7+jm9l6gzrCv2Q6zR+PWP6ZoCw==",
+  "dgSpecHash": "PIkAaeN5yrO//atCPPxGEUk6oIIZ8rvNUR0oFPUYiVtwC34HUZCg1AXSyag28VbHx7IXQTFKzk1OEzxRKcOUQA==",
   "success": true,
-  "projectFilePath": "C:\\dev\\FilmesAPI\\APi-de-Filmes\\Filmes_API\\Filmes_API\\Filmes_API.csproj",
+  "projectFilePath": "C:\\Users\\brunomantovani\\Desktop\\api provisoria\\APi-de-Filmes\\Filmes_API\\Filmes_API\\Filmes_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\brunomantovani\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\brunomantovani\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

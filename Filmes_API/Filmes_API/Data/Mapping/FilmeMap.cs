@@ -34,39 +34,10 @@ namespace Filmes_API.Data.Mapping
                 .WithMany(x => x.Filmes)
                 .HasForeignKey(x => x.DiretorId);
 
-            builder.HasMany(x => x.Atores)
-                .WithMany(x => x.Filmes)
-                .UsingEntity<Dictionary<string, object>>(
-                    "FilmeAtor",
-                    filme => filme
-                        .HasOne<Ator>()
-                        .WithMany()
-                        .HasForeignKey("FilmeId")
-                        .OnDelete(DeleteBehavior.Cascade),
-                    ator => ator
-                        .HasOne<Filme>()
-                        .WithMany()
-                        .HasForeignKey("AtorId")
-                        .OnDelete(DeleteBehavior.Cascade)
 
-
-                );
-
-            builder.HasMany(x => x.Generos)
-                .WithMany(x => x.Filmes)
-                .UsingEntity<Dictionary<string, object>>(
-                    "FilmeGenero",
-                    filme => filme
-                        .HasOne<Genero>()
-                        .WithMany()
-                        .HasForeignKey("FilmeId")
-                        .OnDelete(DeleteBehavior.Cascade),
-                    genero => genero
-                        .HasOne<Filme>()
-                        .WithMany()
-                        .HasForeignKey("GeneroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                );
+            builder.HasOne(x => x.Genero)
+                   .WithMany(x => x.Filmes)
+                   .HasForeignKey(x => x.GeneroId);
         }
     }
 }

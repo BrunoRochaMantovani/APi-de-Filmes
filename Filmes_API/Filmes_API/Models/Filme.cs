@@ -1,4 +1,6 @@
-﻿namespace Filmes_API.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Filmes_API.Models
 {
     public class Filme
     {
@@ -13,10 +15,10 @@
         //PROPRIEDADES DE NAVEGAÇÃO
         public Diretor Diretor { get; set; }
         public int DiretorId { get; set; }
+   
+        public Genero Genero { get; set; }
+        public int GeneroId { get; set; }
 
-        public List<Ator> Atores { get; set; }
-
-        public List<Genero> Generos { get; set; }
 
 
     }

@@ -77,7 +77,6 @@ namespace Filmes_API.Controllers
 
                 await _context.Diretores.AddAsync(diretor);
                 await _context.SaveChangesAsync();
-
                 return Ok(diretor);
 
             }
