@@ -116,5 +116,56 @@ namespace Filmes_API.Controllers
         }
 
 
+        [HttpPut(template:"{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] FilmePostOrPutViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest("Modelo invalido");
+
+                var escolhido = await _context.Filmes
+                        .AsNoTracking()
+                        .Include(x => x.Diretor)
+                        .Include(x => x.Genero)
+                        .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (escolhido == null)
+                    NotFound("Registro não encontrado");
+
+                escolhido.Titulo = model.Titulo;
+                escolhido.EstrelasAvaliacao = model.EstrelasAvaliacao;
+                escolhido.Plot = model.Plot;
+                escolhido.DuracaoFilme = model.DuracaoFilme;
+                escolhido.DiretorId = model.DiretorId;
+                escolhido.GeneroId = model.CategoriaID;
+
+                _context.Filmes.Update(escolhido);
+                await _context.SaveChangesAsync();
+
+                return Ok(escolhido);
+
+
+            }
+            catch(Exception ex) { return BadRequest(ex.Message); }
         }
+
+        [HttpDelete(template:"{id}")]
+        public async Task<IActionResult> Delete (int id)
+        {
+            try
+            {
+                var escolhido = await _context.Filmes
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (escolhido == null)
+                    return NotFound("Registro não encontrado");
+
+                _context.Filmes.Remove(escolhido);
+                return Ok(escolhido);
+            }
+            catch(Exception ex) { return BadRequest(ex.Message); }
+        }
+    }
 }

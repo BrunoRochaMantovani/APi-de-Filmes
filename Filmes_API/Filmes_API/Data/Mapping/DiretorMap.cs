@@ -18,12 +18,9 @@ namespace Filmes_API.Data.Mapping
                   .HasMaxLength(15)
                   .IsRequired();
 
-            builder.Property(x => x.Nacionalidade)
-                   .HasMaxLength(25)
-                   .IsRequired();
-
-            builder.HasIndex(x => x.Nacionalidade)
-                   .IsUnique();
+            builder.HasOne(x => x.Nacionalidade)
+                   .WithMany(x => x.Diretores)
+                   .HasForeignKey(x => x.NacionalidadeId);
         }
     }
 }

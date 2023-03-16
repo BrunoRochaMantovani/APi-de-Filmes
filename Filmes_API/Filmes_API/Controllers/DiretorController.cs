@@ -24,18 +24,19 @@ namespace Filmes_API.Controllers
             {
                 var todos = await _context
                         .Diretores
+                        .Include(x=>x.Nacionalidade)
                         .AsNoTracking()
                         .ToListAsync();
 
-                List<DiretorGetViewModel> atorGetViewModels = new List<DiretorGetViewModel>();
+                List<DiretorGetViewModel> diretorGetViewModels = new List<DiretorGetViewModel>();
 
                 foreach (var obj in todos)
                 {
-                    var ator = new DiretorGetViewModel { Id = obj.Id, PrimeiroNome = obj.PrimeiroNome, UltimoNome = obj.UltimoNome, Nacionalidade = obj.Nacionalidade, Data_Nascimento = obj.Data_Nascimento };
-                    atorGetViewModels.Add(ator);
+                    var ator = new DiretorGetViewModel { Id = obj.Id, PrimeiroNome = obj.PrimeiroNome, UltimoNome = obj.UltimoNome, Data_Nascimento = obj.Data_Nascimento, Nacionalidade = obj.Nacionalidade.Pais };
+                    diretorGetViewModels.Add(ator);
                 }
 
-                return Ok(atorGetViewModels);
+                return Ok(diretorGetViewModels);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
@@ -53,8 +54,9 @@ namespace Filmes_API.Controllers
                 if (escolhido == null)
                     return BadRequest("Usuario não encontrado");
 
-                var diretor = new DiretorGetViewModel { Id = escolhido.Id, PrimeiroNome = escolhido.PrimeiroNome, UltimoNome = escolhido.UltimoNome, Nacionalidade = escolhido.Nacionalidade, Data_Nascimento = escolhido.Data_Nascimento };
+                var diretor = new DiretorGetViewModel { Id = escolhido.Id, PrimeiroNome = escolhido.PrimeiroNome, UltimoNome = escolhido.UltimoNome, Data_Nascimento = escolhido.Data_Nascimento, Nacionalidade = escolhido.Nacionalidade.Pais };
                 return Ok(diretor);
+
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
@@ -71,7 +73,7 @@ namespace Filmes_API.Controllers
                 {
                     PrimeiroNome = model.PrimeiroNome,
                     UltimoNome = model.UltimoNome,
-                    Nacionalidade = model.Nacionalidade,
+                    NacionalidadeId = model.NacionalidadeId,
                     Data_Nascimento = model.Data_Nascimento
                 };
 
@@ -101,8 +103,8 @@ namespace Filmes_API.Controllers
 
                 diretor.PrimeiroNome = model.PrimeiroNome;
                 diretor.UltimoNome = model.UltimoNome;
-                diretor.Nacionalidade = model.Nacionalidade;
                 diretor.Data_Nascimento = model.Data_Nascimento;
+                diretor.NacionalidadeId = model.NacionalidadeId;
 
 
                 _context.Diretores.Update(diretor);

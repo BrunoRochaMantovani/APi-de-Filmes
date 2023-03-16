@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Filmes_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230315130527_Alteração de Schema")]
-    partial class AlteraçãodeSchema
+    [Migration("20230316014704_Banco criado")]
+    partial class Bancocriado
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,10 +36,8 @@ namespace Filmes_API.Migrations
                     b.Property<DateTime>("Data_Nascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nacionalidade")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                    b.Property<int>("NacionalidadeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PrimeiroNome")
                         .IsRequired()
@@ -53,8 +51,7 @@ namespace Filmes_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Nacionalidade")
-                        .IsUnique();
+                    b.HasIndex("NacionalidadeId");
 
                     b.ToTable("Diretores");
                 });
@@ -122,6 +119,38 @@ namespace Filmes_API.Migrations
                     b.ToTable("Generos");
                 });
 
+            modelBuilder.Entity("Filmes_API.Models.Nacionalidade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Pais")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Pais")
+                        .IsUnique();
+
+                    b.ToTable("Nacionalidades");
+                });
+
+            modelBuilder.Entity("Filmes_API.Models.Diretor", b =>
+                {
+                    b.HasOne("Filmes_API.Models.Nacionalidade", "Nacionalidade")
+                        .WithMany("Diretores")
+                        .HasForeignKey("NacionalidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Nacionalidade");
+                });
+
             modelBuilder.Entity("Filmes_API.Models.Filme", b =>
                 {
                     b.HasOne("Filmes_API.Models.Diretor", "Diretor")
@@ -149,6 +178,11 @@ namespace Filmes_API.Migrations
             modelBuilder.Entity("Filmes_API.Models.Genero", b =>
                 {
                     b.Navigation("Filmes");
+                });
+
+            modelBuilder.Entity("Filmes_API.Models.Nacionalidade", b =>
+                {
+                    b.Navigation("Diretores");
                 });
 #pragma warning restore 612, 618
         }
