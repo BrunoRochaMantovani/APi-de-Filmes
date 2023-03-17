@@ -16,6 +16,9 @@ namespace Filmes_API.Data
         public DbSet<Diretor> Diretores { get; set; }
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Genero> Generos { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Papel> Papeis { get; set; }
+
 
         public DbSet<Nacionalidade> Nacionalidades { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +27,8 @@ namespace Filmes_API.Data
             modelBuilder.ApplyConfiguration(new FilmeMap());
             modelBuilder.ApplyConfiguration(new GeneroMap());
             modelBuilder.ApplyConfiguration(new NacionalidadeMap());
+            modelBuilder.ApplyConfiguration(new PapelMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
         }
     }
 }

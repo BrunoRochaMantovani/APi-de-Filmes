@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Filmes_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230316014704_Banco criado")]
-    partial class Bancocriado
+    [Migration("20230317021745_Criado Modelos para autenticacao de usuario")]
+    partial class CriadoModelosparaautenticacaodeusuario
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,65 @@ namespace Filmes_API.Migrations
                     b.ToTable("Nacionalidades");
                 });
 
+            modelBuilder.Entity("Filmes_API.Models.Papel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TipoPapel")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipoPapel")
+                        .IsUnique();
+
+                    b.ToTable("Papeis");
+                });
+
+            modelBuilder.Entity("Filmes_API.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("PapelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PapelId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Filmes_API.Models.Diretor", b =>
                 {
                     b.HasOne("Filmes_API.Models.Nacionalidade", "Nacionalidade")
@@ -170,6 +229,17 @@ namespace Filmes_API.Migrations
                     b.Navigation("Genero");
                 });
 
+            modelBuilder.Entity("Filmes_API.Models.User", b =>
+                {
+                    b.HasOne("Filmes_API.Models.Papel", "Papel")
+                        .WithMany("Users")
+                        .HasForeignKey("PapelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Papel");
+                });
+
             modelBuilder.Entity("Filmes_API.Models.Diretor", b =>
                 {
                     b.Navigation("Filmes");
@@ -183,6 +253,11 @@ namespace Filmes_API.Migrations
             modelBuilder.Entity("Filmes_API.Models.Nacionalidade", b =>
                 {
                     b.Navigation("Diretores");
+                });
+
+            modelBuilder.Entity("Filmes_API.Models.Papel", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

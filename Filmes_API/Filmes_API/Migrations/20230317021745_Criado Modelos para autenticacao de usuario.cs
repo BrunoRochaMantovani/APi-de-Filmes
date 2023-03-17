@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Filmes_API.Migrations
 {
     /// <inheritdoc />
-    public partial class Bancocriado : Migration
+    public partial class CriadoModelosparaautenticacaodeusuario : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,19 @@ namespace Filmes_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Papeis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoPapel = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Papeis", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Diretores",
                 columns: table => new
                 {
@@ -55,6 +68,29 @@ namespace Filmes_API.Migrations
                         name: "FK_Diretores_Nacionalidades_NacionalidadeId",
                         column: x => x.NacionalidadeId,
                         principalTable: "Nacionalidades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PapelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Papeis_PapelId",
+                        column: x => x.PapelId,
+                        principalTable: "Papeis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -116,6 +152,17 @@ namespace Filmes_API.Migrations
                 table: "Nacionalidades",
                 column: "Pais",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Papeis_TipoPapel",
+                table: "Papeis",
+                column: "TipoPapel",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PapelId",
+                table: "Users",
+                column: "PapelId");
         }
 
         /// <inheritdoc />
@@ -125,10 +172,16 @@ namespace Filmes_API.Migrations
                 name: "Filmes");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Diretores");
 
             migrationBuilder.DropTable(
                 name: "Generos");
+
+            migrationBuilder.DropTable(
+                name: "Papeis");
 
             migrationBuilder.DropTable(
                 name: "Nacionalidades");
