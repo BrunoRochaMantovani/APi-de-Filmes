@@ -1,5 +1,6 @@
 using Filmes_API;
 using Filmes_API.Data;
+using Filmes_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlServer(connectionString);
 });
-
+builder.Services.AddTransient<TokenService>();
 builder.Services
       .AddControllers()
       .ConfigureApiBehaviorOptions(options =>

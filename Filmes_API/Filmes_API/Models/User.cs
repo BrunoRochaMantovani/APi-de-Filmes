@@ -10,7 +10,6 @@ namespace Filmes_API.Models
 
         public string Email { get; set; }
         public string Password { get; set; }
-        public Papel Papel { get; set; }
-        public int PapelId { get; set; }
+        public List<Papel> Papel { get; set; }
     }
 }

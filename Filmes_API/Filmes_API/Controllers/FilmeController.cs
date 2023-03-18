@@ -2,6 +2,7 @@
 using Filmes_API.Extensions;
 using Filmes_API.Models;
 using Filmes_API.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -13,6 +14,7 @@ namespace Filmes_API.Controllers
 {
     [ApiController]
     [Route("/v1/filme")]
+    [Authorize(Roles = "administrador")]
     public class FilmeController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -23,6 +25,7 @@ namespace Filmes_API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ListarTodos()
         {
             try 
@@ -57,6 +60,7 @@ namespace Filmes_API.Controllers
         }
 
         [HttpGet(template:"{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> ListarUm(int id)
         {
             try 

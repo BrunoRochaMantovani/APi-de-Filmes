@@ -1,6 +1,7 @@
 ﻿using Filmes_API.Data;
 using Filmes_API.Models;
 using Filmes_API.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace Filmes_API.Controllers
 
     [ApiController]
     [Route("/v1/diretor")]
+    [Authorize(Roles = "administrador")]
     public class DiretorController : Controller
     {
         private readonly AppDbContext _context;
@@ -18,6 +20,7 @@ namespace Filmes_API.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> ListarTodos()
         {
             try
@@ -41,6 +44,7 @@ namespace Filmes_API.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
+        [AllowAnonymous]
         [HttpGet(template: "{id}")]
         public async Task<IActionResult> ListarUm(int id)
         {

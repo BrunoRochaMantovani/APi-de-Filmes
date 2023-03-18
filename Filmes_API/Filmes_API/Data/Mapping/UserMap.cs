@@ -26,9 +26,22 @@ namespace Filmes_API.Data.Mapping
                   .HasMaxLength(50)
                   .IsRequired();
 
-            builder.HasOne(x => x.Papel)
+            builder.HasMany(x => x.Papel)
                    .WithMany(x => x.Users)
-                   .HasForeignKey(x => x.PapelId);
+                   .UsingEntity<Dictionary<string, object>>(
+                    "UserPapel",
+                    papel => papel
+                        .HasOne<Papel>()
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade),
+                    user => user
+                        .HasOne<User>()
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                );
+
         }
     }
 }

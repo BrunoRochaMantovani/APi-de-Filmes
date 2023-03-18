@@ -1,7 +1,9 @@
 ﻿using Filmes_API.Data;
 using Filmes_API.Models;
+using Filmes_API.Services;
 using Filmes_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Filmes_API.Controllers
 {
@@ -17,38 +19,28 @@ namespace Filmes_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] RegisterPostOrPutViewModel model)
+        public async Task<IActionResult> Login([FromServices] TokenService tokenService
+            , [FromBody] LoginViewModel model)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest("Modelo informado incorreto");
+                    return BadRequest("Modelo informado invalido");
 
-                var user = new User 
-                {
-                    Nome = model.Nome,
-                    Username = model.Username, 
-                    Email = model.Email,
-                    Password = model.Password,
-                    PapelId = model.Papel
-                };
+                var user = await _context
+                    .Users
+                    .AsNoTracking()
+                    .Include(x=>x.Papel)
+                    .FirstOrDefaultAsync(x => x.Username == model.Username);
 
-                await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync();
+                if (user == null)
+                    return NotFound("Usuário não encontrado");
 
-                return Ok(user);
 
+                var token = tokenService.GenerateToken(user);
+                return Ok(token);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
-        [HttpPost(template: "v1/accounts/login")]
-        public async Task<IActionResult> Login()
-        {
-            try
-            {
-
-            }catch(Exception ex) { return BadRequest(ex.Message); }
         }
     }
 }
